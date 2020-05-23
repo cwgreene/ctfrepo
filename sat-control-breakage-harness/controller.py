@@ -22,9 +22,11 @@ if "live" in argv:
 
 dt = 0.05
 omega = -0.08660254
+omega = -0.1
 
 scale = 20.0
 max_lie = 0.02
+max_lie = 0.04
 
 curr_time = 0.0 # time estimate
 
@@ -32,7 +34,17 @@ def perturb_by_euler(quat_in):
     from quaternions import Quaternion # put imports only in functions that need them
     q = Quaternion(quat_in[0], quat_in[1], quat_in[2], quat_in[3])
     euler = q.get_euler()
+    # euler[1] -= max_lie * cos(omega * curr_time)
     euler[2] += max_lie * sin(omega * curr_time)
+    q = Quaternion.from_euler(euler)
+    return [q.w, q.x, q.y, q.z]
+
+def perturb_by_euler_simple(quat_in):
+    from quaternions import Quaternion # put imports only in functions that need them
+    q = Quaternion(quat_in[0], quat_in[1], quat_in[2], quat_in[3])
+    euler = q.get_euler()
+    euler[2] = max_lie
+    euler[1] = -max_lie
     q = Quaternion.from_euler(euler)
     return [q.w, q.x, q.y, q.z]
 
@@ -50,7 +62,7 @@ def perturb(quat_in):
 while True:
     data = input()
     nums = [float(x) for x in data.strip().split()]
-    nums = perturb_by_euler(nums)
+    nums = perturb_by_euler_simple(nums)
     data_out = separator.join([str(x) for x in nums])
     print(data_out)
 
