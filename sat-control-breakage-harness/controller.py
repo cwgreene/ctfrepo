@@ -11,8 +11,14 @@ separator = " "
 
 if "live" in argv:
     separator = ","
-    lines = open("ticket.txt").readlines()
-    print(lines[0].strip())
+    try:
+        lines = open("ticket.txt").readlines()
+        print(lines[0].strip())
+    except:
+        print("You need to put the ticket for controlling the satellite " +
+              "into the first line of the file \"ticket.txt\" in this " +
+              "directory")
+        exit(-1)
 
 dt = 0.05
 omega = -0.08660254
