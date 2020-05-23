@@ -26,7 +26,7 @@ omega = -0.1
 
 scale = 20.0
 max_lie = 0.02
-max_lie = 0.04
+max_lie = 0.08
 
 curr_time = 0.0 # time estimate
 
