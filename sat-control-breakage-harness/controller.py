@@ -26,7 +26,7 @@ omega = -0.1
 
 scale = 20.0
 max_lie = 0.02
-max_lie = 0.08
+max_lie = 0.3
 
 curr_time = 0.0 # time estimate
 
@@ -43,8 +43,8 @@ def perturb_by_euler_simple(quat_in):
     from quaternions import Quaternion # put imports only in functions that need them
     q = Quaternion(quat_in[0], quat_in[1], quat_in[2], quat_in[3])
     euler = q.get_euler()
-    euler[2] = max_lie
-    euler[1] = -max_lie
+    euler[1] = max_lie
+    # euler[1] = -max_lie
     q = Quaternion.from_euler(euler)
     return [q.w, q.x, q.y, q.z]
 
